@@ -1,12 +1,12 @@
 {
-  "name": "US AI Infrastructure Opportunity Watchlist",
+  "name": "美股 AI 基礎設施機會追蹤清單",
   "generated_timezone": "Asia/Taipei",
   "headline_limit_per_ticker": 3,
   "core_watchlist": [
     {
       "ticker": "PENG",
       "company": "Penguin Solutions",
-      "theme": "AI inference memory bottleneck",
+      "theme": "AI 推論記憶體瓶頸",
       "baseline_bucket": "A",
       "baseline_priority": 9,
       "news_query": "\"PENG\" OR \"Penguin Solutions\" AI OR inference OR CXL"
@@ -14,7 +14,7 @@
     {
       "ticker": "APLD",
       "company": "Applied Digital",
-      "theme": "AI factory capacity and long-duration power contracts",
+      "theme": "AI 工廠容量與長約電力合約",
       "baseline_bucket": "A",
       "baseline_priority": 9,
       "news_query": "\"APLD\" OR \"Applied Digital\" AI OR data center OR hyperscaler"
@@ -22,7 +22,7 @@
     {
       "ticker": "CLS",
       "company": "Celestica",
-      "theme": "AI server and rack-scale platform manufacturing",
+      "theme": "AI 伺服器與機櫃級平台製造",
       "baseline_bucket": "A",
       "baseline_priority": 8,
       "news_query": "\"CLS\" OR Celestica AI OR AMD OR Helios"
@@ -30,7 +30,7 @@
     {
       "ticker": "NVT",
       "company": "nVent Electric",
-      "theme": "AI data center power distribution and liquid cooling",
+      "theme": "AI 資料中心配電與液冷",
       "baseline_bucket": "A",
       "baseline_priority": 8,
       "news_query": "\"NVT\" OR \"nVent\" AI OR liquid cooling OR data center"
@@ -38,7 +38,7 @@
     {
       "ticker": "CRDO",
       "company": "Credo Technology",
-      "theme": "AI scale-out interconnects and AEC",
+      "theme": "AI scale-out 互連與 AEC",
       "baseline_bucket": "B",
       "baseline_priority": 7,
       "news_query": "\"CRDO\" OR Credo AI OR interconnect OR AEC"
@@ -46,7 +46,7 @@
     {
       "ticker": "VRT",
       "company": "Vertiv",
-      "theme": "AI data center power and thermal management",
+      "theme": "AI 資料中心供電與散熱管理",
       "baseline_bucket": "B",
       "baseline_priority": 7,
       "news_query": "\"VRT\" OR Vertiv AI OR cooling OR data center"
@@ -54,7 +54,7 @@
     {
       "ticker": "ALAB",
       "company": "Astera Labs",
-      "theme": "PCIe, CXL, and rack-scale AI connectivity",
+      "theme": "PCIe、CXL 與機櫃級 AI 連接",
       "baseline_bucket": "B",
       "baseline_priority": 7,
       "news_query": "\"ALAB\" OR \"Astera Labs\" AI OR CXL OR PCIe"
@@ -62,7 +62,7 @@
     {
       "ticker": "CRWV",
       "company": "CoreWeave",
-      "theme": "AI cloud and GPU infrastructure demand",
+      "theme": "AI 雲端與 GPU 基礎設施需求",
       "baseline_bucket": "C",
       "baseline_priority": 6,
       "news_query": "\"CRWV\" OR CoreWeave AI OR GPU cloud"
@@ -70,7 +70,7 @@
     {
       "ticker": "RXT",
       "company": "Rackspace Technology",
-      "theme": "Enterprise governed AI cloud",
+      "theme": "企業級受控 AI 雲",
       "baseline_bucket": "C",
       "baseline_priority": 6,
       "news_query": "\"RXT\" OR Rackspace AI OR AMD OR enterprise AI"
@@ -78,7 +78,7 @@
     {
       "ticker": "TSSI",
       "company": "TSS",
-      "theme": "AI rack integration micro-cap",
+      "theme": "AI 機櫃整合微型股",
       "baseline_bucket": "C",
       "baseline_priority": 6,
       "news_query": "\"TSSI\" OR \"TSS\" AI OR rack integration"
@@ -88,7 +88,7 @@
     {
       "ticker": "ANET",
       "company": "Arista Networks",
-      "theme": "AI Ethernet fabric",
+      "theme": "AI 乙太網路 fabric",
       "baseline_bucket": "B",
       "baseline_priority": 6,
       "news_query": "\"ANET\" OR Arista AI OR ethernet"
@@ -96,7 +96,7 @@
     {
       "ticker": "SMCI",
       "company": "Super Micro Computer",
-      "theme": "AI server platform",
+      "theme": "AI 伺服器平台",
       "baseline_bucket": "B",
       "baseline_priority": 6,
       "news_query": "\"SMCI\" OR Supermicro AI OR server"
@@ -104,7 +104,7 @@
     {
       "ticker": "DELL",
       "company": "Dell Technologies",
-      "theme": "AI server systems",
+      "theme": "AI 伺服器系統",
       "baseline_bucket": "B",
       "baseline_priority": 5,
       "news_query": "\"DELL\" AI server OR data center"
@@ -112,7 +112,7 @@
     {
       "ticker": "AMD",
       "company": "Advanced Micro Devices",
-      "theme": "AI accelerator and rack-scale platform",
+      "theme": "AI 加速器與機櫃級平台",
       "baseline_bucket": "B",
       "baseline_priority": 5,
       "news_query": "\"AMD\" AI OR MI350 OR Helios"
@@ -120,7 +120,7 @@
     {
       "ticker": "MRVL",
       "company": "Marvell Technology",
-      "theme": "Custom silicon and AI networking",
+      "theme": "客製化晶片與 AI 網通",
       "baseline_bucket": "B",
       "baseline_priority": 5,
       "news_query": "\"MRVL\" OR Marvell AI OR custom silicon"
@@ -128,7 +128,7 @@
     {
       "ticker": "ETN",
       "company": "Eaton",
-      "theme": "Electrical infrastructure for AI data centers",
+      "theme": "AI 資料中心電力基礎設施",
       "baseline_bucket": "B",
       "baseline_priority": 5,
       "news_query": "\"ETN\" OR Eaton AI OR power distribution"
@@ -136,7 +136,7 @@
     {
       "ticker": "ORCL",
       "company": "Oracle",
-      "theme": "AI cloud capacity and hyperscale capex",
+      "theme": "AI 雲容量與 hyperscale 資本支出",
       "baseline_bucket": "B",
       "baseline_priority": 5,
       "news_query": "\"ORCL\" AI cloud OR OCI OR capex"
@@ -144,7 +144,7 @@
     {
       "ticker": "NBIS",
       "company": "Nebius Group",
-      "theme": "AI cloud capacity satellite",
+      "theme": "AI 雲容量衛星標的",
       "baseline_bucket": "C",
       "baseline_priority": 5,
       "news_query": "\"NBIS\" OR Nebius AI cloud"

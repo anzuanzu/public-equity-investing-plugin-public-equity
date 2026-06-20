@@ -16,6 +16,17 @@ import xml.etree.ElementTree as ET
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 USER_AGENT += "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 
+ACTION_LABELS = {
+    "Focus today": "今日聚焦",
+    "Core watch": "核心追蹤",
+    "Monitor": "持續觀察",
+    "Re-underwrite": "重新驗證",
+    "Promotion candidate": "升級候選",
+    "Focus Today": "今日聚焦",
+    "Promotion Candidates": "升級候選",
+    "Risk Review": "風險重估",
+}
+
 
 @dataclass
 class WatchItem:
@@ -139,6 +150,10 @@ def keyword_score(headlines: list[dict[str, str]], positive_keywords: list[str],
     return score, positive_hits, negative_hits
 
 
+def localize_action(label: str) -> str:
+    return ACTION_LABELS.get(label, label)
+
+
 def classify_item(
     item: WatchItem,
     market: dict[str, Any],
@@ -152,21 +167,21 @@ def classify_item(
     abs_weekly = abs(market["weekly_change_pct"])
     if abs_daily >= rules["daily_move_focus_pct"]:
         score += 3
-        reasons.append(f"1-day move {market['daily_change_pct']}%")
+        reasons.append(f"單日波動 {market['daily_change_pct']}%")
     elif abs_daily >= rules["daily_move_focus_pct"] / 2:
         score += 1
-        reasons.append(f"1-day move {market['daily_change_pct']}%")
+        reasons.append(f"單日波動 {market['daily_change_pct']}%")
 
     if abs_weekly >= rules["weekly_move_focus_pct"]:
         score += 3
-        reasons.append(f"5-day move {market['weekly_change_pct']}%")
+        reasons.append(f"5 日波動 {market['weekly_change_pct']}%")
     elif abs_weekly >= rules["weekly_move_focus_pct"] / 2:
         score += 1
-        reasons.append(f"5-day move {market['weekly_change_pct']}%")
+        reasons.append(f"5 日波動 {market['weekly_change_pct']}%")
 
     if market["volume_ratio"] >= rules["volume_spike_ratio"]:
         score += 2
-        reasons.append(f"volume spike {market['volume_ratio']}x")
+        reasons.append(f"量能放大 {market['volume_ratio']}x")
 
     news_score, positive_hits, negative_hits = keyword_score(
         headlines,
@@ -175,22 +190,22 @@ def classify_item(
     )
     score += news_score
     if positive_hits:
-        reasons.append(f"{positive_hits} catalyst headlines")
+        reasons.append(f"{positive_hits} 則催化新聞")
     if negative_hits:
-        reasons.append(f"{negative_hits} risk headlines")
+        reasons.append(f"{negative_hits} 則風險新聞")
 
     if market["daily_change_pct"] < -8:
         score += 1
-        reasons.append("forced review on sharp drawdown")
+        reasons.append("大幅回檔需強制複核")
 
     if negative_hits >= 2:
-        action = "Re-underwrite"
+        action = "重新驗證"
     elif score >= rules["focus_threshold"]:
-        action = "Focus today"
+        action = "今日聚焦"
     elif score >= rules["review_threshold"]:
-        action = "Core watch"
+        action = "核心追蹤"
     else:
-        action = "Monitor"
+        action = "持續觀察"
 
     promotion_candidate = item.source_group == "candidate_universe" and score >= rules["promotion_threshold"]
     return {
@@ -212,24 +227,26 @@ def compare_with_previous(current_rows: list[dict[str, Any]], history_dir: Path)
     for row in current_rows:
         prior = previous_map.get(row["ticker"])
         if not prior:
-            row["change_note"] = "New to saved history"
+            row["change_note"] = "首次納入歷史資料"
             continue
         rank_delta = prior["rank"] - row["rank"]
-        action_changed = prior["action"] != row["action"]
+        previous_action = localize_action(prior["action"])
+        current_action = localize_action(row["action"])
+        action_changed = previous_action != current_action
         if rank_delta > 0:
-            row["change_note"] = f"Moved up {rank_delta} places"
+            row["change_note"] = f"上升 {rank_delta} 名"
         elif rank_delta < 0:
-            row["change_note"] = f"Moved down {abs(rank_delta)} places"
+            row["change_note"] = f"下降 {abs(rank_delta)} 名"
         elif action_changed:
-            row["change_note"] = f"Action {prior['action']} -> {row['action']}"
+            row["change_note"] = f"狀態 {previous_action} -> {current_action}"
         else:
-            row["change_note"] = "No major ranking change"
+            row["change_note"] = "排名無重大變化"
 
 
 def render_html(report_name: str, rows: list[dict[str, Any]], generated_at: str) -> str:
-    focus_rows = [row for row in rows if row["action"] == "Focus today"]
+    focus_rows = [row for row in rows if row["action"] == "今日聚焦"]
     promotion_rows = [row for row in rows if row["promotion_candidate"]]
-    review_rows = [row for row in rows if row["action"] == "Re-underwrite"]
+    review_rows = [row for row in rows if row["action"] == "重新驗證"]
 
     def render_table_rows(items: list[dict[str, Any]]) -> str:
         html_rows: list[str] = []
@@ -239,7 +256,7 @@ def render_html(report_name: str, rows: list[dict[str, Any]], generated_at: str)
                 f"<span class=\"source\">{html.escape(headline['source'])}</span></li>"
                 for headline in row["headlines"]
             )
-            reasons = ", ".join(row["reasons"]) if row["reasons"] else "Baseline watch"
+            reasons = ", ".join(row["reasons"]) if row["reasons"] else "基準追蹤"
             html_rows.append(
                 "<tr>"
                 f"<td><strong>{row['ticker']}</strong><div class=\"sub\">{html.escape(row['company'])}</div></td>"
@@ -251,7 +268,7 @@ def render_html(report_name: str, rows: list[dict[str, Any]], generated_at: str)
                 f"<td>{row['score']}</td>"
                 f"<td>{html.escape(row['action'])}</td>"
                 f"<td>{html.escape(reasons)}</td>"
-                f"<td>{html.escape(row.get('change_note', 'First run'))}</td>"
+                f"<td>{html.escape(row.get('change_note', '首次執行'))}</td>"
                 f"<td><ul class=\"headline-list\">{headlines}</ul></td>"
                 "</tr>"
             )
@@ -405,25 +422,25 @@ def render_html(report_name: str, rows: list[dict[str, Any]], generated_at: str)
 <body>
   <main>
     <section class="hero">
-      <div class="pill">Daily AI Watchlist Monitor</div>
+      <div class="pill">每日 AI 追蹤儀表板</div>
       <h1>{html.escape(report_name)}</h1>
       <p class="lede">這份監控報告會同時追蹤原始核心名單與延伸候選名單，根據最新價格動能、成交量異常、以及新聞催化劑強度，動態把股票分成「今天該聚焦」、「持續核心追蹤」、「需要重估風險」與「可升級候選」。</p>
-      <div class="meta">Generated at {html.escape(generated_at)}</div>
+      <div class="meta">產生時間：{html.escape(generated_at)}</div>
     </section>
 
     <section class="grid">
       <article class="panel">
-        <h2>Focus Today</h2>
+        <h2>今日聚焦</h2>
         <div class="kpi">{len(focus_rows)}</div>
         <div class="meta">今天分數最高、最值得先看的標的</div>
       </article>
       <article class="panel">
-        <h2>Promotion Candidates</h2>
+        <h2>升級候選</h2>
         <div class="kpi">{len(promotion_rows)}</div>
         <div class="meta">延伸名單中可升級成主追蹤的股票</div>
       </article>
       <article class="panel">
-        <h2>Risk Review</h2>
+        <h2>風險重估</h2>
         <div class="kpi">{len(review_rows)}</div>
         <div class="meta">負面新聞或劇烈波動，需要重新檢視 thesis</div>
       </article>
@@ -431,31 +448,31 @@ def render_html(report_name: str, rows: list[dict[str, Any]], generated_at: str)
 
     <section class="stack">
       <article class="panel">
-        <h2>Today&apos;s Priority Notes</h2>
+        <h2>今日重點說明</h2>
         <ul>
-          <li><strong>Focus today</strong> 代表事件強度已超過你設定的日常監控門檻，不一定等於買進訊號。</li>
-          <li><strong>Promotion candidate</strong> 代表這檔股票本來只在延伸名單，但今天的事件密度或價格/量能足以升級成主追蹤。</li>
-          <li><strong>Re-underwrite</strong> 代表應該重新驗證原始投資邏輯，而不是只把回檔當成便宜。</li>
+          <li><strong>今日聚焦</strong> 代表事件強度已超過你設定的日常監控門檻，不一定等於買進訊號。</li>
+          <li><strong>升級候選</strong> 代表這檔股票本來只在延伸名單，但今天的事件密度或價格與量能足以升級成主追蹤。</li>
+          <li><strong>重新驗證</strong> 代表應該重新驗證原始投資邏輯，而不是只把回檔當成便宜。</li>
         </ul>
       </article>
 
       <article class="panel">
-        <h2>Full Ranking</h2>
+        <h2>完整排名</h2>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Ticker</th>
-                <th>Theme</th>
-                <th>Price</th>
-                <th>1D</th>
-                <th>5D</th>
-                <th>Volume</th>
-                <th>Score</th>
-                <th>Action</th>
-                <th>Driver</th>
-                <th>Delta</th>
-                <th>Recent Headlines</th>
+                <th>代號</th>
+                <th>主題</th>
+                <th>價格</th>
+                <th>1 日</th>
+                <th>5 日</th>
+                <th>量能</th>
+                <th>分數</th>
+                <th>狀態</th>
+                <th>驅動因子</th>
+                <th>變化</th>
+                <th>近期新聞</th>
               </tr>
             </thead>
             <tbody>
@@ -472,7 +489,7 @@ def render_html(report_name: str, rows: list[dict[str, Any]], generated_at: str)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate a daily AI watchlist monitor HTML report.")
+    parser = argparse.ArgumentParser(description="產生每日 AI 追蹤清單 HTML 報告。")
     parser.add_argument("--config", default="config/ai_watchlist.json")
     parser.add_argument("--output-html", default="outputs/ai-watchlist-daily-monitor.html")
     parser.add_argument("--output-json", default="work/daily-monitor/latest-snapshot.json")
