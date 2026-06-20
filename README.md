@@ -2,6 +2,13 @@
 
 這個工作區除了靜態研究報告，也包含一個可每日更新的美股 AI 監控流程，會自動整理重點個股、延伸候選名單與每日優先順序。
 
+## 雲端自動更新
+
+- 目前已改成由 `GitHub Actions` 自動更新，不需要每天開著電腦
+- 預設排程是台北時間每個平日早上 `08:30`
+- 更新完成後會自動同步到 GitHub Pages 網站
+- 網站首頁：`https://anzuanzu.github.io/public-equity-investing-plugin-public-equity/`
+
 ## 功能
 
 - 追蹤核心名單：`PENG`、`APLD`、`CLS`、`NVT`、`CRDO`、`VRT`、`ALAB`、`CRWV`、`RXT`、`TSSI`
@@ -16,7 +23,9 @@
   - `重新驗證`
   - `升級候選`
 
-## 執行方式
+## 手動執行方式
+
+平常不需要手動跑；只有你想立即更新或本地測試時才需要。
 
 ```powershell
 & "C:\Users\james\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" `
@@ -36,6 +45,6 @@
 
 ## 建議的日常節奏
 
-- 台北時間每個平日早上 8:30 跑一次
+- GitHub Actions 會在台北時間每個平日早上 8:30 自動跑一次
 - 先看 `今日聚焦` 與 `升級候選`
 - 如果有 `重新驗證`，代表不是先加碼，而是先回頭檢查原始 thesis
