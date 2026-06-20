@@ -1,0 +1,188 @@
+{
+  "name": "US AI Infrastructure Opportunity Watchlist",
+  "generated_timezone": "Asia/Taipei",
+  "headline_limit_per_ticker": 3,
+  "core_watchlist": [
+    {
+      "ticker": "PENG",
+      "company": "Penguin Solutions",
+      "theme": "AI inference memory bottleneck",
+      "baseline_bucket": "A",
+      "baseline_priority": 9,
+      "news_query": "\"PENG\" OR \"Penguin Solutions\" AI OR inference OR CXL"
+    },
+    {
+      "ticker": "APLD",
+      "company": "Applied Digital",
+      "theme": "AI factory capacity and long-duration power contracts",
+      "baseline_bucket": "A",
+      "baseline_priority": 9,
+      "news_query": "\"APLD\" OR \"Applied Digital\" AI OR data center OR hyperscaler"
+    },
+    {
+      "ticker": "CLS",
+      "company": "Celestica",
+      "theme": "AI server and rack-scale platform manufacturing",
+      "baseline_bucket": "A",
+      "baseline_priority": 8,
+      "news_query": "\"CLS\" OR Celestica AI OR AMD OR Helios"
+    },
+    {
+      "ticker": "NVT",
+      "company": "nVent Electric",
+      "theme": "AI data center power distribution and liquid cooling",
+      "baseline_bucket": "A",
+      "baseline_priority": 8,
+      "news_query": "\"NVT\" OR \"nVent\" AI OR liquid cooling OR data center"
+    },
+    {
+      "ticker": "CRDO",
+      "company": "Credo Technology",
+      "theme": "AI scale-out interconnects and AEC",
+      "baseline_bucket": "B",
+      "baseline_priority": 7,
+      "news_query": "\"CRDO\" OR Credo AI OR interconnect OR AEC"
+    },
+    {
+      "ticker": "VRT",
+      "company": "Vertiv",
+      "theme": "AI data center power and thermal management",
+      "baseline_bucket": "B",
+      "baseline_priority": 7,
+      "news_query": "\"VRT\" OR Vertiv AI OR cooling OR data center"
+    },
+    {
+      "ticker": "ALAB",
+      "company": "Astera Labs",
+      "theme": "PCIe, CXL, and rack-scale AI connectivity",
+      "baseline_bucket": "B",
+      "baseline_priority": 7,
+      "news_query": "\"ALAB\" OR \"Astera Labs\" AI OR CXL OR PCIe"
+    },
+    {
+      "ticker": "CRWV",
+      "company": "CoreWeave",
+      "theme": "AI cloud and GPU infrastructure demand",
+      "baseline_bucket": "C",
+      "baseline_priority": 6,
+      "news_query": "\"CRWV\" OR CoreWeave AI OR GPU cloud"
+    },
+    {
+      "ticker": "RXT",
+      "company": "Rackspace Technology",
+      "theme": "Enterprise governed AI cloud",
+      "baseline_bucket": "C",
+      "baseline_priority": 6,
+      "news_query": "\"RXT\" OR Rackspace AI OR AMD OR enterprise AI"
+    },
+    {
+      "ticker": "TSSI",
+      "company": "TSS",
+      "theme": "AI rack integration micro-cap",
+      "baseline_bucket": "C",
+      "baseline_priority": 6,
+      "news_query": "\"TSSI\" OR \"TSS\" AI OR rack integration"
+    }
+  ],
+  "candidate_universe": [
+    {
+      "ticker": "ANET",
+      "company": "Arista Networks",
+      "theme": "AI Ethernet fabric",
+      "baseline_bucket": "B",
+      "baseline_priority": 6,
+      "news_query": "\"ANET\" OR Arista AI OR ethernet"
+    },
+    {
+      "ticker": "SMCI",
+      "company": "Super Micro Computer",
+      "theme": "AI server platform",
+      "baseline_bucket": "B",
+      "baseline_priority": 6,
+      "news_query": "\"SMCI\" OR Supermicro AI OR server"
+    },
+    {
+      "ticker": "DELL",
+      "company": "Dell Technologies",
+      "theme": "AI server systems",
+      "baseline_bucket": "B",
+      "baseline_priority": 5,
+      "news_query": "\"DELL\" AI server OR data center"
+    },
+    {
+      "ticker": "AMD",
+      "company": "Advanced Micro Devices",
+      "theme": "AI accelerator and rack-scale platform",
+      "baseline_bucket": "B",
+      "baseline_priority": 5,
+      "news_query": "\"AMD\" AI OR MI350 OR Helios"
+    },
+    {
+      "ticker": "MRVL",
+      "company": "Marvell Technology",
+      "theme": "Custom silicon and AI networking",
+      "baseline_bucket": "B",
+      "baseline_priority": 5,
+      "news_query": "\"MRVL\" OR Marvell AI OR custom silicon"
+    },
+    {
+      "ticker": "ETN",
+      "company": "Eaton",
+      "theme": "Electrical infrastructure for AI data centers",
+      "baseline_bucket": "B",
+      "baseline_priority": 5,
+      "news_query": "\"ETN\" OR Eaton AI OR power distribution"
+    },
+    {
+      "ticker": "ORCL",
+      "company": "Oracle",
+      "theme": "AI cloud capacity and hyperscale capex",
+      "baseline_bucket": "B",
+      "baseline_priority": 5,
+      "news_query": "\"ORCL\" AI cloud OR OCI OR capex"
+    },
+    {
+      "ticker": "NBIS",
+      "company": "Nebius Group",
+      "theme": "AI cloud capacity satellite",
+      "baseline_bucket": "C",
+      "baseline_priority": 5,
+      "news_query": "\"NBIS\" OR Nebius AI cloud"
+    }
+  ],
+  "scoring": {
+    "focus_threshold": 13,
+    "promotion_threshold": 12,
+    "review_threshold": 6,
+    "daily_move_focus_pct": 7.0,
+    "weekly_move_focus_pct": 15.0,
+    "volume_spike_ratio": 1.5,
+    "positive_keywords": [
+      "earnings",
+      "guidance",
+      "backlog",
+      "contract",
+      "customer",
+      "deployment",
+      "order",
+      "partnership",
+      "capacity",
+      "lease",
+      "liquid cooling",
+      "inference",
+      "ai"
+    ],
+    "negative_keywords": [
+      "offering",
+      "dilution",
+      "lawsuit",
+      "downgrade",
+      "delay",
+      "cut",
+      "miss",
+      "short seller",
+      "fraud",
+      "probe"
+    ]
+  }
+}
